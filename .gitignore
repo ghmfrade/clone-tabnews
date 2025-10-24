@@ -1,5 +1,3 @@
 .next
 node_modules
 cursoJs
-models/calculadora.js
-tests/unit/calculadora.test.js
