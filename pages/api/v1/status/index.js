@@ -6,8 +6,10 @@ async function status(request, response) {
   const vDatabase = await database.query("SHOW server_version;");
   const versionDatabase = vDatabase.rows[0].server_version;
 
-  const maxConn = await database.query("SHOW max_connections;");
-  const maxConnections = parseInt(maxConn.rows[0].max_connections);
+  const maxConn = await database.query(`
+    SELECT current_setting('max_connections')::int AS max_connections;
+  `);
+  const maxConnections = maxConn.rows[0].max_connections;
 
   const activeConn = await database.query({
     text: `SELECT COUNT(*)::int AS number_of_active_connections
